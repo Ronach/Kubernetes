@@ -12,7 +12,7 @@ services:
       MARIADB_PASSWORD: password
       MARIADB_ROOT_PASSWORD: materazzi # Interchangeable avec MYSQL_ROOT_PASWWORD. Seule variable d'env obligatoire. Consulter https://hub.docker.com/_/mariadb
   
-  # Anciennement phpminadmin. Intérêt = taille minimaliste. Interface web façon phpmyadmin pour visualiser. En php.
+  # phpMyAdmin plus léger. Interface web vers nos BDD.
   # adminer:
   #   image: adminer
   #   restart: always
