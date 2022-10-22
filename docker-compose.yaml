@@ -1,0 +1,39 @@
+---
+version: '3.1'
+
+services:
+  mariadb: # saisir ce nom dans le champ Serveur de phpmyadmin ou adminer
+    image: mariadb:10   # forked from MySQL. Open source relational database.
+    volumes: 
+      - db_data:/var/lib/mariadb
+    restart: always
+    environment:
+      MARIADB_USER: loann
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: materazzi # Interchangeable avec MYSQL_ROOT_PASWWORD. Seule variable d'env obligatoire. Consulter https://hub.docker.com/_/mariadb
+  
+  # Anciennement phpminadmin. Intérêt = taille minimaliste. Interface web façon phpmyadmin pour visualiser. En php.
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080 # ne marchait pas quand je changeais le port pour 8000:8000
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+
+  flask:
+    depends_on:
+      - mariadb
+    image: loann28/capge-k8s-exo3:2.0.0
+    ports:
+      - 80:5000
+    restart: always      
+
+volumes:
+  db_data: {}
